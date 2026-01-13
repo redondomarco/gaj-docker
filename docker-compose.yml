@@ -1,7 +1,7 @@
 services:
     db:
         image: postgis/postgis:12-3.4
-        container_name: gaj-db
+        container_name: gaj-db25
         #restart: always
         environment:
           POSTGRES_DB: gaj
@@ -14,8 +14,8 @@ services:
         ports:
           - "5432:5432"
     java:
-      container_name: gaj-service
-      image: gaj-service:0.1
+      container_name: gaj-service25
+      image: gaj-service:2.5
       ports:
         - 8080:8080
         - 8083:8083
@@ -25,15 +25,15 @@ services:
         #- ./keys/server.xml:/opt/tomcat/conf/server.xml
         - ./keys/sqlhosts:/etc/sqlhosts
         - ./keys/m2-settings-v2.xml:/root/.m2/settings.xml
-        - ./conf/python-scripts:/root/python
+        #- ./conf/python-scripts:/root/python
         - ./conf/homeroot:/root
-        - ./conf/tomcat-users.xml:/etc/tomcat8/tomcat-users.xml
-        - ./conf/homeroot/tmf.war:/var/lib/tomcat8/webapps/tmf.war
+        - ./conf/tomcat-users.xml:/etc/tomcat9/tomcat-users.xml
+        - ./conf/homeroot/tmf.war:/var/lib/tomcat9/webapps/tmf.war
         #- ./keys/application-uat2.yml.mainjuzgamiento:/etc/application.yml
-        #- ./keys/application-uat2.yml.mainjuzgamiento:/gaj-server-main/src/tmf-main-project/tmf-service/src/main/resources/application.yml
+        - ./keys/aplication.yml:/etc/application.yml
     front:
-      container_name: gaj-front
-      image: gaj-front:0.1
+      container_name: gaj-front4116
+      image: gaj-front:4.1.16
       ports:
         - 4200:4200
       volumes:

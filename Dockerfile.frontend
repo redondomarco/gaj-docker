@@ -1,8 +1,8 @@
 # Use a Debian-based Node.js image as the base
 #FROM node:8-stretch
-FROM node:19-bullseye
+FROM node:20-bullseye
 
-ENV NODE_OPTIONS=--openssl-legacy-provider
+#ENV NODE_OPTIONS=--openssl-legacy-provider
 #FROM debian:buster
 
 #COPY conf/debian-buster.list /etc/apt/sources.list
@@ -17,13 +17,21 @@ RUN DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
 
 RUN updatedb
 
-#ARG NODE_VERSION=20
+ARG NODE_VERSION=16
 
 # install nvm
-# RUN curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.3/install.sh | bash
+RUN curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.3/install.sh | bash
 
 # set env
-# ENV NVM_DIR=/root/.nvm
+ENV NVM_DIR=/root/.nvm
+
+RUN bash -c "source $NVM_DIR/nvm.sh && nvm install $NODE_VERSION"
+
+RUN bash -c "source $NVM_DIR/nvm.sh && nvm use lts/gallium"
+
+#WORKDIR /gaj-frontend/src/tmf-frontend-ui
+
+#RUN npm install
 
 # install node
 # RUN bash -c "source $NVM_DIR/nvm.sh && nvm install $NODE_VERSION"
@@ -40,12 +48,15 @@ EXPOSE 4200
 COPY gaj-frontend /gaj-frontend
 WORKDIR /gaj-frontend
 RUN git config --global --add safe.directory /gaj-frontend
-RUN git checkout feature-3.1.1
+#RUN git checkout feature-3.1.1
 WORKDIR /gaj-frontend/src/tmf-frontend-ui/
 COPY keys/environment.docker.ts /gaj-frontend/src/tmf-frontend-ui/src/environments/environment.uat2.ts 
-RUN npm install --legacy-peer-deps
+RUN npm install
 RUN npm install -g @angular/cli
-#npm install @angular/cli
+
+RUN bash -c "source $NVM_DIR/nvm.sh && nvm install 20"
+
+RUN bash -c "source $NVM_DIR/nvm.sh && nvm use 20"
 
 CMD ["ng", "serve", "--host", "0.0.0.0", "--disable-host-check", "--configuration=uat2"]
 

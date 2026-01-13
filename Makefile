@@ -2,10 +2,10 @@ include .env
 RUNSRV = docker-compose run --no-deps --rm -u root gaj-service
 
 build-server:
-	docker build --debug -t gaj-service:0.1 -f Dockerfile.server .
+	docker build --debug -t gaj-service:2.5 -f Dockerfile.server .
 
 build-front:
-	docker build --debug -t gaj-front:0.1 -f Dockerfile.frontend .
+	docker build --debug -t gaj-front:4.1.16 -f Dockerfile.frontend .
 
 start:
 	@docker-compose up -d
@@ -29,9 +29,12 @@ ps:
 
 
 logs-front:
-	docker logs -f gaj-front
+	docker logs -f gaj-front4116
 
 logs-server:
-	docker logs -f gaj-service
+	docker logs -f gaj-service25
 
-rebuild:	stop build-server build-front start logs-front
+logs-server-tofile:
+	docker logs gaj-service25 > keys/server.log 2>&1
+
+rebuild:	stop build-server build-front start logs-server
