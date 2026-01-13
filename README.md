@@ -1,60 +1,56 @@
 # gaj-server-docker
 
-# Clonamos este repo y creamos el archivo .env
+### Clonamos este repo y creamos el archivo .env
 ```
-git clone https://github.com/redondomarco/gaj-server-docker.git
+git clone https://github.com/redondomarco/gaj-server.git
 
-cd gaj-server-docker
+cd gaj-server
 
 touch .env
-
+mkdir -p ./conf/homeroot/
 ```
 
-# Requerida la fuente del server, en la version deseada
+### Requerida la fuente del server, en la version deseada
 
 ```
 git clone https://gitlab.rosario.gob.ar/externos/gaj/gaj-server-main.git
 
-cd gaj-server-main
-
-git checkout feature-3.1.1
-
-cd ..
 ```
 
-# requerida la fuente del front, en la version deseada
+### requerida la fuente del front, en la version deseada
 
 ```
 git clone https://gitlab.rosario.gob.ar/externos/gaj/gaj-frontend.git
 
-cd gaj-frontend
-
-git checkout feature-3.1.1
-
 cd ..
 ```
-# requeridas credenciales
+### requeridas credenciales
 
 en la carpeta keys/ se esperan los siguientes archivos
 
 ```
--rw-rw-r-- 1 marco marco   5538 nov 11 18:41 application-uat2.yml.mainjuzgamiento
--rw-rw-r-- 1 marco marco   3014 nov 10 13:26 m2-settings-v2.xml
--rw-rw-r-- 1 marco marco 660401 nov  6 14:09 m_gaj.27-03-23.esquema.sql
+-rw-rw-r-- 1 marco marco   6365 ene  8 16:34 aplication.yml
+-rw-rw-r-- 1 marco marco   1490 ene 12 17:01 environment.docker.ts
+-rw-rw-r-- 1 marco marco   3014 nov 13 16:21 m2-settings-v2.xml
+-rw-rw-r-- 1 marco marco 774930 ene  5 16:07 m_gaj.esquema.sql
+-rw-rw-r-- 1 marco marco     25 nov 17 14:54 README.md
+-rw-rw-r-- 1 marco marco   5562 dic  4 18:06 sqlhosts
 ```
 
-# construimos las imagenes de los contenedores
+## construimos las imagenes de los contenedores
 ```
 make build-server
 
 make build-front
 ```
 
-# iniciamos server, db y front
+## iniciamos server, db y front
 
 make start
 
-# Server
+
+
+## Server
 
 para entrar en el contenedor server
 ```
@@ -66,21 +62,23 @@ una vez dentro generamos el war
 ```
 root@xxxxxxxxxx:/opt# compilar.sh
 ```
-
+### Notas del Server
 
 test server
 
 http://info-178.pm.rosario.gov.ar:8080/tmf/mantenedores/agentes/public
 
-# Front 
+## Front 
 
 para entrar en el contenedor front
 ```
 make consola-front
 ```
 
+### Notas del Front
+si hacemos algun cambio en environment.docker.ts debemos rebuildear el proyecto
 
-# DB
+## DB
 
 para ejecutar comandos en la db
 
@@ -94,6 +92,7 @@ Type "help" for help.
 
 gaj=# SELECT * FROM pg_catalog.pg_tables;
 ```
+### Notas de la db
 
 para guardar un dump de la base:
 
